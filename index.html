@@ -14,18 +14,28 @@
     <script src="./index.js" defer></script>
 </head>
 <body class=" m-0 p-0 flex flex-col justify-center">
-    <header class="w-[1440px] h-[72px] border border-[#E3E4DF] pr-12 pl-12 flex items-center">
-        <div class="flex w-[199px] h-[41px] gap-[8px] items-center">
-            <div class=" w-[36px] h-[36px] text-[36px] font-extrabold text-[] flex items-center justify-center">✳</div>
+    <header class="min-w-0  border border-[#E3E4DF] pr-12 pl-12 flex items-center">
+        <div class="flex min-w-[199px] min-h-[41px] gap-[8px] items-center">
+            <div class=" min-w-[36px] min-h-[36px] text-[36px] font-extrabold text-[] flex items-center justify-center">✳</div>
             <span class=" text-3xl tracking-[-2px] text-[#23251F]">luma.</span>
         </div>
     </header>
-    <div class="w-[1440px] h-[103px] border-b pt-5 pr-12 pb-5 pl-12 flex gap-12 bg-[#F7F8F3] border-[#DFE2D7] justify-between">
-        <div class="font-semibold text-[44px] tracking-[-4.5px] w-[550.08px] h-[51px]">Find your next inspiration.</div>
-        <div class="">
-            
+    <div class="min-w-0  border-b pt-5 pr-12 pb-5 pl-12 flex gap-12 bg-[#F7F8F3] border-[#DFE2D7] flex justify-between">
+        <h1 id="home-title" class=" text-[44px] tracking-[-4.5%] w-[550.08px] h-[51px]">Find your next <span class="text-[44px] tracking-[-4.5%] text-[#0C5A40]">inspiration.</span></h1>
+        <div class="min-w-0">
+            <form id="search-form" role="search" class="w-[745.2px] h-[62px] border rounded-2xl pt-2 pr-2 pb-2 pl-5 bg-[#ffffff] border-[#D9DECC] flex gap-3 items-center">
+            <div class="w-[10.83px] h-[10.83px] flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search preview-icon"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg></div>
+            <label for="search" class="sr-only">Search photos</label>
+            <input id="search" type="search" maxlength="120" placeholder="search photos" enterkeyhint="search" autocomplete="off" class="h-11 w-[0] min-w-0 flex-1 bg-transparent text-base text-[#23251f] outline-none placeholder:text-[#92988A] tracking-normal font-normal" >
+            <button id="search-button" type="submit" class="w-[112px] h-[44px] rounded-xl pt-3 pr-6 pb-3 pl-6 bg-[#D9F583] text-[14px] text-[#293719] tracking-normal flex justify-center items-center">Search ↗</button>
+            </form>
         </div>
     </div>
-    <div id="images" class="w-[1440px] h-screen pt-6 pr12 pb-14 pl-12 flex gap-8 columns-3 bg-auto flex-1 "></div>
+    <section class="min-w-0 pt-6 pr-12 pb-14 pl-12 gap-8">
+        <div id="images" class="columns-1 sm:columns-2 lg:columns-3 gap-[22px] mt-4"></div>
+        <div class="mt-8 flex justify-center">
+            <button id="load-more" type="button" class="w-[152px] h-[42px] rounded-full pt-3 pr-8 pb-3 pl-8 bg-[#D9F583] flex justify-center items-center text-[14px] font-semibold tracking-normal text-[#293719]">Load more ↓</button>
+        </div>
+    </section>
 </body>
 </html>

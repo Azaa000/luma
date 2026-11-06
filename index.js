@@ -1,21 +1,71 @@
-const images = document.getElementById("images")
+const searchInput = document.getElementById("search");
+const searchForm = document.getElementById("search-form");
+const loadMoreButton = document.getElementById("load-more");
+const searchButton = document.getElementById("load-more");
+const images = document.getElementById("images");
 
-const main = async() => {
-    const response = await fetch("https://api.unsplash.com/photos/?page=1",{
-        headers: {
-            Authorization: "client-ID ZTp78Axj9Q0IbdXm0WE_0xwRvH2rFLvCOSSs8WVGpoQ",
-        }
-    })
+let currentPage = 0;
+let currentSearch = "";
 
-    const result = await response.json()
-    result.forEach((photo) => {
-        const id = photo.id;
-        const imageUrl = photo.urls.full;
+const ACCESS_KEY = "ZTp78Axj9Q0IbdXm0WE_0xwRvH2rFLvCOSSs8WVGpoQ";
 
-        ImageTrackList.innerHtml += `
-        <img src"${imageUrl}" alt="${id}"/>
-        `;
-    });
+const showPhotos = (photos) => {
+  photos.forEach((photo) => {
+    images.insertAdjacentHTML(
+      "beforeend",
+      `
+            <div class="mb-6 break-inside-avoid overflow-hidden rounded-2xl">
+                <img
+                src="${photo.urls.small}"
+                alt=""
+                loading="lazy"
+                class="block h-auto w-full"
+                />
+            </div>
+            `,
+    );
+  });
 };
 
-main();
+const fetchPhotos = async () => {
+  const nextPage = currentPage + 1;
+  let url = `https://api.unsplash.com/photos?page=${nextPage}`;
+
+  if (currentSearch !== "") {
+    url = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(currentSearch)}page=${nextPage}`;
+  }
+
+  const response = await fetch(url, {
+    headers: { Authorization: `Client-ID ${ACCESS_KEY}` },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Зураг авч чадсангүй: ${response.status}`);
+  }
+
+  const data = await response.json();
+
+  if (currentSearch) {
+    showPhotos(data.results);
+  } else {
+    showPhotos(data);
+  }
+  loadMoreButton.textContent = "Load more ↓";
+};
+
+searchForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  currentSearch = searchInput.value.trim();
+
+  currentPage = 0;
+  images.innerHTML = "";
+  fetchPhotos();
+});
+
+loadMoreButton.addEventListener("click", () => {
+  if (loadMoreButton.disabled) return;
+  fetchPhotos();
+});
+
+fetchPhotos();
